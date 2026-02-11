@@ -7,9 +7,9 @@ const Logout: React.FC = () => {
     const handleLogout = async (): Promise<void> => {
         try{
 
-            const Response =  await fetch("/api/add_logout", { method: "POST" });
+            const res =  await fetch("/api/add_logout", { method: "POST" });
 
-            if (!Response.ok){
+            if (!res.ok){
              console.error ("Logout Failed");
              return;
             }

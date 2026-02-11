@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 
-const Search =() =>{
+const SearchNotes =() =>{
 return(
     <div className="flex items-center">
             <form action="#" className="flex items-center bg-gray-100 rounded-full overflow-hidden shadow-sm">
@@ -21,4 +21,4 @@ return(
         </div>
 );
 };
-export default Search
+export default SearchNotes
