@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     );
 
     res.status(200).json(result.rows[0]);
-  } catch (error) {
+  } catch (error:unknown) {
     console.error(error);
     res.status(500).json({ error: "Database error" });
   }

@@ -11,7 +11,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     return res.status(405).json({ message: "Method not allowed" });
   }
 
-  const { lemail, lpassword } = req.body;
+  const { lemail, lpassword } = req.body as LoginRequestBody;
 
   if (!lemail || typeof lemail !== "string" || lemail.trim() === "") {
     return res.status(400).json({ message: "Invalid Email" });
@@ -57,7 +57,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
     res.setHeader("Set-Cookie", cookie);
     return res.status(200).json({ message: "Login successful" });
-  } catch (error) {
+  } catch (error:unknown) {
     console.error(error);
     res.status(500).json({ error: "Database error" });
   }

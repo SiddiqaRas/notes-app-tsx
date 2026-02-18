@@ -6,7 +6,7 @@ import React from "react"
 const AddNote = () => {
  return(
     <div>
-        <Link href='/'>
+        <Link href='/notesdetail'>
              <Image
               src="/add.png"
               alt="icon for adding a new note"

@@ -83,10 +83,10 @@ const Login = ()=>{
               <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
                 Login
               </h2>
-              <form action="#" onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label
-                    htmlFor="useremail"
+                    htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-800"
                   >
                         Email
@@ -133,7 +133,7 @@ const Login = ()=>{
                     Account doesn't exist?{" "}
                     <Link
                       href="/signup"
-                      className="text-grey-600 font-semibold hover:underline"
+                      className="text-gray-600 font-semibold hover:underline"
                     >
                       SignUp
                     </Link>
