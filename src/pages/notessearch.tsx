@@ -1,10 +1,11 @@
-import AddNavbar from '@/components/navbar'
-import pool from '@/lib/db';
 import { parse } from "cookie";
-import { useState } from 'react';
-import Link from 'next/link';
-import { GetServerSidePropsContext } from 'next';
- type Note={
+import { useState } from "react";
+import pool from "@/lib/db";
+import Link from "next/link";
+import AddSimpleNav from "@/components/navbaraddnote";
+import { GetServerSidePropsContext } from "next";
+
+type Note={
     notes_id: number;
     notes_title: string;
     notes_content: string;
@@ -13,13 +14,12 @@ import { GetServerSidePropsContext } from 'next';
  type DashboardProps = {
   notes: Note[]; // props from getServerSideProps
 };
-
 export async function getServerSideProps(context:GetServerSidePropsContext) {
-  const cookies = context.req.headers.cookie
-    ? parse(context.req.headers.cookie)
-    : {};
-  const userId = cookies.user_id;
-
+     const cookies = context.req.headers.cookie ? parse(context.req.headers.cookie) : {};
+    const userId = cookies.user_id;
+    const {query}= context;
+    const {q} = query;
+ 
   if (!userId) {
     return {
       redirect: {
@@ -31,18 +31,17 @@ export async function getServerSideProps(context:GetServerSidePropsContext) {
 
   try {
     const result = await pool.query(
-      "SELECT notes_id, notes_title, notes_content, notes_keywords FROM notes_tbl WHERE notes_user_id = $1 ORDER BY notes_timestamp DESC",
-      [userId]
+       "SELECT notes_id, notes_title, notes_content, notes_keywords FROM notes_tbl WHERE notes_user_id=$1 AND (notes_title=$2 OR notes_title LIKE '%' || $2 || '%' OR notes_keywords=$2 OR notes_keywords LIKE '%' || $2 || '%')",
+            [userId, q]
     );
-
-    return { props: { notes: result.rows } };
-  } catch (error:unknown) {
+    
+    return { props: { notes:result.rows } };
+  } catch (error) {
     console.error("Error fetching notes:", error);
     return { props: { notes: [] } };
   }
 }
-
-export default function Dashboard({notes: initialNotes }: DashboardProps) {
+export default function SearchedNotes({notes: initialNotes}:DashboardProps){
   const [notes, setNotes] = useState(initialNotes);
   const [openId, setOpenId] = useState<number | null>(null);
   const previewLength = 50;
@@ -66,7 +65,7 @@ export default function Dashboard({notes: initialNotes }: DashboardProps) {
 
   return (
     <div>
-      <AddNavbar />
+      <AddSimpleNav/>
       <h1 className="text-3xl font-semibold text-center mt-8 mb-8">
         My Notes
       </h1>

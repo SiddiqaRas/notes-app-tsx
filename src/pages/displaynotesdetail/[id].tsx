@@ -11,6 +11,7 @@ type Notes={
     notes_id: number;
     notes_title:string;
     notes_content:string;
+    notes_keywords:string;
     
 }
 type Dashboard={
@@ -42,13 +43,13 @@ export const getServerSideProps: GetServerSideProps<Dashboard> = async (
 
   try {
     const result = await pool.query(
-      "SELECT notes_id, notes_title, notes_content FROM notes_tbl WHERE notes_user_id = $1 AND notes_id = $2",
+      "SELECT notes_id, notes_title, notes_content, notes_keywords FROM notes_tbl WHERE notes_user_id = $1 AND notes_id = $2",
       [userId, id]
     );
     const notes = result.rows;
 
     return { props: { notes } };
-  } catch (error) {
+  } catch (error:unknown) {
     console.error("Error fetching notes:", error);
     return { props: { notes: [] } };
   }
@@ -90,7 +91,7 @@ export default function Dashboard({ notes }:Dashboard) {
             <div className=" mt-10 relative max-w-1/2 bg-gray-100 rounded-lg shadow p-6 mx-auto">
 
             <h2 className="text-lg font-semibold mb-2 break-words">{note.notes_title}</h2>
-
+            <h5 className="font-semibold mb-2 break-words">{note.notes_keywords}</h5>
             <p className="text-gray-600 text-sm break-words">{note.notes_content}</p>
 
             </div>

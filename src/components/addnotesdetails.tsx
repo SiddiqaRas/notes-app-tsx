@@ -4,11 +4,13 @@ import { useRouter } from "next/router";
  type Err={
     title?: string;
     content?:string;
+    keywords?:string;
     
  };
  const NoteCard: React.FC = () => {
       const [title, setTitle] = useState("")
       const [content, setContent] = useState("")
+      const [keywords, setKeywords] = useState("")
       const [errors, setErrors] = useState<Err>({})
       const router = useRouter();
       const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>):Promise<void> => {
@@ -19,6 +21,7 @@ import { useRouter } from "next/router";
 
         // Title validation
        const titlePattern = /^[a-zA-Z0-9 .,!?'-]+$/;
+        const keyPattern = /^[a-zA-Z0-9 .,!?'-]+$/;
 
         if (!title || title.trim() === "") {
           newErrors.title = "Title is required";
@@ -31,6 +34,16 @@ import { useRouter } from "next/router";
           valid = false;
         }
 
+        if (!keywords || keywords.trim() === "") {
+          newErrors.keywords = "Keywords are required";
+          valid = false;
+        } else if (keywords.length > 50) {
+          newErrors.keywords = "Keywords length cannot exceed 100 characters";
+          valid = false;
+        }else if (!keyPattern.test(keywords)) {
+          newErrors.title = "Title can only contain letters, numbers, and basic punctuation";
+          valid = false;
+        }
 
         // Content validation
         if (!content || content.trim() === "") {
@@ -50,12 +63,14 @@ import { useRouter } from "next/router";
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ title: title,
-              content: content }),
+              content: content,
+            keywords:keywords }),
           });
 
           if (res.ok) {
             setTitle("");
             setContent("");
+            setKeywords("");
             setErrors({});
             alert("Note Saved!")
             router.push("/dashboard")
@@ -65,7 +80,7 @@ import { useRouter } from "next/router";
         }
         return (
           
-          <div className="h-[40vh] flex flex-col items-center justify-center bg-white ">
+          <div className="h-[60vh] flex flex-col items-center justify-center bg-white ">
             <h1 className="text-3xl font-semibold mt-8 mb-8 text-center">
             Add Note
           </h1>
@@ -91,7 +106,25 @@ import { useRouter } from "next/router";
                     <p className="text-red-500 text-sm mt-1">{errors.title}</p>
                   )}
                 </div>
-
+                <div className="mb-4">
+                  <label
+                    htmlFor="keywords"
+                    className="block mb-2 text-sm font-medium text-gray-800"
+                  >
+                   Keywords
+                  </label>
+                  <input
+                    value={keywords}
+                    type="text"
+                    onChange={(e) => setKeywords(e.target.value)}
+                    placeholder="Keywords"
+                  
+                    className="w-full px-3 py-2 rounded-md border-b border-gray-300 focus:outline-none "
+                  />
+                    {errors.keywords && (
+                    <p className="text-red-500 text-sm mt-1">{errors.keywords}</p>
+                  )}
+                </div>
               
                 <div className="mb-4">
                   <label

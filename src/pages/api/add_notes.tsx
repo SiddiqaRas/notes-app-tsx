@@ -4,6 +4,7 @@ import {NextApiRequest, NextApiResponse} from "next";
 type data={
   title:string;
   content:string;
+  keywords:string;
 };
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
   if (req.method !== "POST") {
@@ -13,13 +14,21 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
  const userId = cookies.user_id;
   if (!userId) return res.status(401).json({ message: "Not authenticated" });
 
-  const { title, content } = req.body;
+  const { title, content, keywords } = req.body;
   if (!title || typeof title !== "string" || title.trim() === "") {
    return res.status(405).json({ message: "Invalid Title" });
   }
 
   if (title.length > 255) {
     return res.status(405).json({ message: "Title legth cannot be greater than 255 characters" });
+  }
+
+   if (!keywords || typeof keywords !== "string" || keywords.trim() === "") {
+   return res.status(405).json({ message: "Invalid Keyword" });
+  }
+
+  if (keywords.length > 50) {
+    return res.status(405).json({ message: "Keywords length cannot be greater than 100 characters" });
   }
 
   if(!content || typeof content !== "string"){
@@ -32,8 +41,8 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
   try {
     const result = await pool.query(
-      "INSERT INTO notes_tbl (notes_title, notes_content, notes_user_id) VALUES ($1, $2, $3) RETURNING *",
-      [title, content, userId]
+      "INSERT INTO notes_tbl (notes_title, notes_content, notes_user_id, notes_keywords) VALUES ($1, $2, $3, $4) RETURNING *",
+      [title, content, userId, keywords]
     );
 
     res.status(200).json(result.rows[0]);
