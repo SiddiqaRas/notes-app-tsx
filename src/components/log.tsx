@@ -78,16 +78,16 @@ const Login = ()=>{
  return(
         <div>
              <AddSimpleNavbar/>
-         <div className="min-h-[90vh] flex items-center justify-center bg-white overflow-hidden">
-            <div className="w-full max-w-md p-6 shadow-sm bg-gray-100 rounded-lg max-h-[90vh]">
-              <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+         <div className="min-h-[90vh] flex items-center justify-center overflow-hidden">
+            <div className="w-full max-w-md p-6 shadow-lg bg-white rounded-lg max-h-[90vh]">
+              <h2 className="text-3xl text-center font-sans font-bold text-black mb-6">
                 Login
               </h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label
                     htmlFor="email"
-                    className="block mb-2 text-sm font-medium text-gray-800"
+                    className="block mb-2 text-md font-medium text-black"
                   >
                         Email
                   </label>
@@ -107,7 +107,7 @@ const Login = ()=>{
                 <div className="mb-4">
                   <label
                     htmlFor="password"
-                    className="block mb-2 text-sm font-medium text-gray-800"
+                    className="block mb-2 text-md font-medium text-black"
                   >
                     Password
                   </label>
@@ -126,14 +126,14 @@ const Login = ()=>{
                 <div>
                     <button 
                   type="submit"
-                  className="mt-4 px-6 py-2 bg-gray-100 text-black font-semibold rounded-lg shadow-sm">Login</button>
+                  className="mt-4 px-6 py-2 bg-[#FEFCE8] border-2 border-solid border-[#FEF3C6] transform hover:-translate-y-2 transition-all duration-500 text-black font-semibold rounded-lg shadow-sm">Login</button>
                 </div>
                 <div className="mt-4 text-center">
                   <p className="text-sm text-black-700">
                     Account doesn't exist?{" "}
                     <Link
                       href="/signup"
-                      className="text-gray-600 font-semibold hover:underline"
+                      className="text-gray-600 font-semibold hover:text-black"
                     >
                       SignUp
                     </Link>

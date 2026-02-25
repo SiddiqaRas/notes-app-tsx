@@ -26,8 +26,8 @@ import { useRouter } from "next/router";
         if (!title || title.trim() === "") {
           newErrors.title = "Title is required";
           valid = false;
-        } else if (title.length > 255) {
-          newErrors.title = "Title length cannot exceed 255 characters";
+        } else if (title.length > 30) {
+          newErrors.title = "Title length cannot exceed 30 characters";
           valid = false;
         }else if (!titlePattern.test(title)) {
           newErrors.title = "Title can only contain letters, numbers, and basic punctuation";
@@ -37,7 +37,7 @@ import { useRouter } from "next/router";
         if (!keywords || keywords.trim() === "") {
           newErrors.keywords = "Keywords are required";
           valid = false;
-        } else if (keywords.length > 50) {
+        } else if (keywords.length > 30) {
           newErrors.keywords = "Keywords length cannot exceed 100 characters";
           valid = false;
         }else if (!keyPattern.test(keywords)) {
@@ -80,17 +80,17 @@ import { useRouter } from "next/router";
         }
         return (
           
-          <div className="h-[60vh] flex flex-col items-center justify-center bg-white ">
-            <h1 className="text-3xl font-semibold mt-8 mb-8 text-center">
+          <div className="h-[75vh] flex flex-col items-center my-* justify-center ">
+            <h1 className="text-3xl font-sans mt-10 mb-15 font-bold text-center">
             Add Note
           </h1>
-            <div className="w-full max-w-3xl p-6 shadow-sm bg-gray-100 rounded-lg">
+            <div className="w-full max-w-3xl p-6 shadow-md bg-white my-6 rounded-lg">
               <form action="#" onSubmit={handleSubmit}>
                 {/* Title Input */}
                 <div className="mb-4">
                   <label
                     htmlFor="title"
-                    className="block mb-2 text-sm font-medium text-gray-800"
+                    className="block mb-2 text-md font-medium text-black"
                   >
                     Title
                   </label>
@@ -109,7 +109,7 @@ import { useRouter } from "next/router";
                 <div className="mb-4">
                   <label
                     htmlFor="keywords"
-                    className="block mb-2 text-sm font-medium text-gray-800"
+                    className="block mb-2 text-md font-medium text-black"
                   >
                    Keywords
                   </label>
@@ -129,7 +129,7 @@ import { useRouter } from "next/router";
                 <div className="mb-4">
                   <label
                     htmlFor="content"
-                    className="block mb-2 text-sm font-medium text-gray-800"
+                    className="block mb-2 text-md font-medium text-black"
                   >
                     Add Notes
                   </label>
@@ -147,7 +147,7 @@ import { useRouter } from "next/router";
                 <div>
                 <button
                   type="submit"
-                  className="mt-4 px-6 py-2 bg-gray-100 text-black font-semibold rounded-lg shadow-sm">Save</button>
+                  className="mt-4 px-6 py-2 bg-[#FEFCE8] border-2 border-solid border-[#FEF3C6] transform hover:-translate-y-2 transition-all duration-500 text-black font-semibold rounded-lg shadow-sm">Save</button>
                   </div>
               </form>
             </div>

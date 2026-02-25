@@ -19,7 +19,7 @@ function Search(){
         if (!text || text.trim() === "") {
             newErrors.text = "Text Required";
             valid = false;
-        } else if (text.length > 255) {
+        } else if (text.length > 30) {
             newErrors.text = "Maximum 255 characters";
             valid = false;
         }else if (!textPattern.test(text)) {
@@ -39,18 +39,18 @@ function Search(){
 
         return(
             <div className="flex items-center">
-                <form onSubmit={handleSubmit} className="flex items-center bg-gray-100 rounded-full overflow-hidden shadow-sm">
+                <form onSubmit={handleSubmit}  className="flex items-center bg-[#FEFCE8] border-2 border-solid border-[#FEF3C6] rounded-full overflow-hidden shadow-sm">
                     <input
                     type="text"
                     value={text}
                     name="searchnote"
                     onChange={(e) => setText(e.target.value)}
-                    placeholder="Search Title"
+                    placeholder="Search Title or Keywords"
                     className="px-4 py-2 w-64 bg-white text-black placeholder-black focus:outline-none"
                     />
                     <button
                     type="submit"
-                    className="flex items-center justify-center px-3"
+                    className="flex items-center justify-center bg-[#FEFCE8] px-3"
                     >
                     <Image src="/searchicon.png" alt="search icon" width={20} height={20} />
                     </button>

@@ -72,8 +72,8 @@ export default function Editnotesdetail({notes}:Dashboard){
             if (!title || title.trim() === "") {
               newErrors.title = "Title is required";
               valid = false;
-            } else if (title.length > 255) {
-              newErrors.title = "Title length cannot exceed 255 characters";
+            } else if (title.length > 30) {
+              newErrors.title = "Title length cannot exceed 30 characters";
               valid = false;
             }else if (!titlePattern.test(title)) {
               newErrors.title = "Title can only contain letters, numbers, and basic punctuation";
@@ -83,8 +83,8 @@ export default function Editnotesdetail({notes}:Dashboard){
             if (!keywords || keywords.trim() === "") {
               newErrors.keywords = "Keywords are required";
               valid = false;
-            } else if (keywords.length > 50) {
-              newErrors.keywords = "Keywords length cannot exceed 100 characters";
+            } else if (keywords.length > 30) {
+              newErrors.keywords = "Keywords length cannot exceed 30 characters";
               valid = false;
             }else if (!keyPattern.test(keywords)) {
               newErrors.title = "Title can only contain letters, numbers, and basic punctuation";
@@ -140,34 +140,34 @@ export default function Editnotesdetail({notes}:Dashboard){
                 </div>
                     <Logout/>
         </nav>
-        <div className="min-h-screen bg-white p-6">
-          <h1 className="text-3xl font-semibold mt-8 mb-8 text-center">
+        <div className="h-[75vh] flex flex-col items-center my-* justify-center">
+          <h1 className="text-3xl font-sans mt-7 mb-15 font-bold text-center">
             Edit Note
           </h1>
+            <div className="w-full max-w-3xl p-6 shadow-md bg-white my-6 rounded-lg">
             <form onSubmit={handleSubmit} >
-                <div className=" mt-10 relative max-w-3xl bg-gray-100 rounded-lg shadow p-6 mx-auto">
+                
                   <div className="mb-4">
                       <label
                         htmlFor="title"
-                        className="block mb-2 text-sm font-medium text-gray-800"
+                        className="block mb-2 text-md font-medium text-black"
                       >
                         Title
                       </label>
-                      <p className="text-gray-600 text-md break-words">
+                      <p className="text-black text-md break-words">
                         <textarea value={title} onChange={e => setTitle( e.target.value)} className="w-full px-3 py-2 rounded-md border-b border-gray-300 focus:outline-none"/>
                         {errors.title && (
                         <p className="text-red-500 text-sm mt-1">{errors.title}</p>
                       )}
                       </p>
-                </div>
                 <div className="mb-4">
                       <label
                         htmlFor="keywords"
-                        className="block mb-2 text-sm font-medium text-gray-800"
+                        className="block mb-2 text-md font-medium text-black"
                       >
                         Keywords
                       </label>
-                      <p className="text-gray-600 text-md break-words">
+                      <p className="text-black text-md break-words">
                         <textarea value={keywords} onChange={e => setKeywords( e.target.value)} className="w-full px-3 py-2 rounded-md border-b border-gray-300 focus:outline-none"/>
                         {errors.keywords && (
                         <p className="text-red-500 text-sm mt-1">{errors.keywords}</p>
@@ -177,23 +177,24 @@ export default function Editnotesdetail({notes}:Dashboard){
                 <div className="mb-4">
                       <label
                         htmlFor="content"
-                        className="block mb-2 text-sm font-medium text-gray-800"
+                        className="block mb-2 text-md font-medium text-black"
                       >
                         Content
                       </label>
-                    <p className="text-gray-600 text-sm break-words">
+                    <p className="text-black text-md break-words">
                         <textarea value={content} onChange={e => setContent(e.target.value)} className="w-full px-3 py-2 rounded-md border-b border-gray-300 focus:outline-none"/>
                         {errors.content && (
                         <p className="text-red-500 text-sm mt-1">{errors.content}</p>
                       )}
                     </p>
                 </div>
-                <button className="mt-4 px-6 py-2 bg-gray-100 text-black font-semibold rounded-lg shadow-sm" type="submit">
+                <button className="mt-4 px-6 py-2 bg-[#FEFCE8] border-2 border-solid border-[#FEF3C6] transform hover:-translate-y-2 transition-all duration-500 text-black font-semibold rounded-lg shadow-sm" type="submit">
                     Save
                 </button>
 
                 </div>
             </form>
+          </div>
         </div>
     </div>
     );

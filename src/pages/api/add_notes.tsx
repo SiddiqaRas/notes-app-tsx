@@ -19,16 +19,16 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
    return res.status(405).json({ message: "Invalid Title" });
   }
 
-  if (title.length > 255) {
-    return res.status(405).json({ message: "Title legth cannot be greater than 255 characters" });
+  if (title.length > 30) {
+    return res.status(405).json({ message: "Title legth cannot be greater than 30 characters" });
   }
 
    if (!keywords || typeof keywords !== "string" || keywords.trim() === "") {
    return res.status(405).json({ message: "Invalid Keyword" });
   }
 
-  if (keywords.length > 50) {
-    return res.status(405).json({ message: "Keywords length cannot be greater than 100 characters" });
+  if (keywords.length > 30) {
+    return res.status(405).json({ message: "Keywords length cannot be greater than 30 characters" });
   }
 
   if(!content || typeof content !== "string"){

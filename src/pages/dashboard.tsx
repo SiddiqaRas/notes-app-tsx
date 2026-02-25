@@ -4,6 +4,7 @@ import { parse } from "cookie";
 import { useState } from 'react';
 import Link from 'next/link';
 import { GetServerSidePropsContext } from 'next';
+import Image from 'next/image';
  type Note={
     notes_id: number;
     notes_title: string;
@@ -57,7 +58,7 @@ export default function Dashboard({notes: initialNotes }: DashboardProps) {
 
       // Remove note from state to update UI instantly
       setNotes((prev) => prev.filter((note) => note.notes_id !== noteId));
-      setOpenId(null); // close dropdown
+     
     } catch (err) {
       console.error(err);
       alert("Could not delete the note");
@@ -65,65 +66,46 @@ export default function Dashboard({notes: initialNotes }: DashboardProps) {
   };
 
   return (
-    <div>
+    <div >
       <AddNavbar />
-      <h1 className="text-3xl font-semibold text-center mt-8 mb-8">
+      <h1 className="text-3xl text-center mt-20 mb-5 font-sans font-bold">
         My Notes
       </h1>
-      <div className="min-h-60 bg-gray-100 p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="min-h-60 p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
         {notes.length === 0 && <p>No notes found.</p>}
 
         {notes.map((note) => (
           <div key={note.notes_id}>
-            <div className="mt-10 relative w-130 h-50 bg-gray-100 rounded-lg shadow p-4 mx-8">
-
-              {/* 3 dots button */}
-              <button
-                onClick={() =>
-                  setOpenId(
-                    openId === note.notes_id ? null : note.notes_id
-                  )
-                }
-                className="absolute top-3 right-3 text-black text-lg"
-              >
-                ⋮
-              </button>
-
-              {/* Dropdown */}
-              {openId === note.notes_id && (
-                <div className="absolute top-5 right-7 border border-gray-300 bg-white w-20 z-10 rounded shadow">
+            <div className="mt-10 relative w-80 h-70 bg-white rounded-3xl shadow-xl p-4 ml-5 mr-5 border-2 border-solid border-[#FEF3C6] transform hover:-translate-y-2 transition-all duration-300">
+              <div className="absolute top-53 end-10 rounded-full p-3 bg-[#FEFCE8] border-2 border-solid border-[#FEF3C6] transform hover:-translate-y-2 transition-all duration-300">
                   <Link href={`/editnotesdetail/${note.notes_id}`}>
-                  <button className="block w-full text-left px-3 py-2 hover:bg-gray-100">
-                    Edit
-                  </button>
+                  <Image
+                    src="/pencil.png"
+                    alt="icon for adding a new note"
+                    width={20}
+                    height={20}
+                    >
+                    </Image>
                   </Link>
-                  <button
-                    onClick={() => deleteNote(note.notes_id)}
-                    className="block w-full text-left px-3 py-2 text-red-500 hover:bg-gray-100"
-                  >
-                    Delete
-                  </button>
                 </div>
-              )}
-
+                <div className="absolute top-53 right-25 rounded-full p-3 bg-[#FEFCE8] border-2 border-solid border-[#FEF3C6] transform hover:-translate-y-2 transition-all duration-300">
+                 <Link href='#' onClick={() => deleteNote(note.notes_id)}> 
+                 <Image src="/trash.png"
+                  alt="icon for adding a new note"
+                   width={20} 
+                   height={20}
+                    > 
+                    </Image> 
+                    </Link> 
+                </div>
               {/* Note content */}
-              <h2 className="text-lg font-semibold mb-2 break-words">
+              <h2 className="mt-8 ml-3 mr-3 mb-2 break-words font-sans text-2xl font-bold">
                 {note.notes_title}
               </h2>
-              <h4 className="font-semibold mb-2 break-words">
-                {note.notes_keywords}
-              </h4>
-
-              <p className="text-gray-600 text-sm break-words">
-                {note.notes_content.length > previewLength
-                  ? note.notes_content.slice(0, previewLength) + "..."
-                  : note.notes_content}
-              </p>
 
               {note.notes_content.length > previewLength && (
-                <Link
+                <Link className="text-gray-700 ml-3 text-sm mt-5 inline-block hover:text-black"
                   href={`/displaynotesdetail/${note.notes_id}`}
-                  className="text-gray-700 text-sm mt-2 inline-block hover:underline"
                 >
                   Read More
                 </Link>

@@ -84,15 +84,15 @@ export default function Dashboard({ notes }:Dashboard) {
                 </div>
                     <Logout/>
         </nav>
-    <div className="min-h-screen bg-white p-6">
+    <div className="min-h-screen p-6">
       {notes.length === 0 && <p>No notes found.</p>}
       {notes.map((note) => (
         
-            <div className=" mt-10 relative max-w-1/2 bg-gray-100 rounded-lg shadow p-6 mx-auto">
+            <div className=" mt-10 relative max-w-1/2 min-h-[60vh] bg-white rounded-lg shadow p-6 mx-auto">
 
-            <h2 className="text-lg font-semibold mb-2 break-words">{note.notes_title}</h2>
-            <h5 className="font-semibold mb-2 break-words">{note.notes_keywords}</h5>
-            <p className="text-gray-600 text-sm break-words">{note.notes_content}</p>
+            <h2 className="text-3xl font-sans mt-7 mb-7 font-bold italic mb-2 break-words text-justify">{note.notes_title}</h2>
+            <h5 className="font-bold font-sans text-xl mb-7 mt-7 break-words text-justify">{note.notes_keywords}</h5>
+            <p className="text-black font-sans text-md break-words text-justify">{note.notes_content}</p>
 
             </div>
             ))}
