@@ -1,0 +1,50 @@
+create a project that whose basic features are
+Different Users are able to signup & login and access the dashboard according to the role and specified user.
+super admin is able to view all the projects of all the users along with their updates.
+user that is assigned a project can add daily updates. Multiple users can work on one project and are able to add updates to it.
+For each project one should be able to add project title and description.
+
+
+
+Tables:
+Admin (sign up so they can access the following features on login)
+ -> Create Project (Add a Project Name and Description and assign it to certain users)
+ -> All the projects displayed on the dashboard and then by clicking on each project a dynamic page opens up that shows ll the updates with recent one being on top
+
+Users (sign up so they can access the following features on login)
+ -> Able to see the assigned project on dashboard with visible options of adding update.
+ -> Change description of the project
+
+Project
+Updates
+
+CREATE TABLE users(
+user_id SERIAL PRIMARY KEY,
+user_name VARCHAR(50) NOT NULL,
+user_email CITEXT UNIQUE NOT NULL,
+password_hash TEXT NOT NULL,
+u_role TEXT NOT NULL DEFAULT 'user',
+created_at TIMESTAMP DEFAULT NOW()
+);
+CREATE TABLE projects(
+project_id SERIAL PRIMARY KEY,
+project_name VARCHAR(50) NOT NULL,
+project_description TEXT NOT NULL,
+created_by INT REFERENCES users(user_id ON DELETE CASCADE),
+created_at TIMESTAMP DEFAULT NOW()
+);
+CREATE TABLE project_assignments(
+aproject_id INT REFERENCES projects(project_id) ON DELETE CASCADE,
+auser_id INT REFERENCES users(user_id) ON DELETE CASCADE,
+assigned_at TIMESTAMP DEFAULT NOW(),
+PRIMARY KEY(aproject_id, auser_id)
+);
+CREATE TABLE project_updates(
+update_id SERIAL PRIMARY KEY,
+p_update TEXT NOT NULL,
+created_at TIMESTAMP DEFAULT NOW(),
+updated_at TIMESTAMP,
+update_created_by INT REFERENCES users(user_id),
+updated_project_id INT REFERENCES projects(project_id) ON DELETE CASCADE,
+last_edited_by INT REFERENCES users(user_id)
+);
